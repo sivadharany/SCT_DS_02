@@ -1,0 +1,70 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the dataset
+titanic_df = pd.read_csv('train.csv')
+# Drop unnecessary columns
+titanic_df.drop(['PassengerId', 'Ticket', 'Cabin'], axis=1, inplace=True)
+
+# Replace NaN values in 'Embarked' column with the most common value
+titanic_df['Embarked'].fillna('S', inplace=True)
+
+# Replace NaN values in 'Age' column with the median age
+titanic_df['Age'].fillna(titanic_df['Age'].median(), inplace=True)
+
+# Convert 'Sex' column to categorical data type
+titanic_df['Sex'] = titanic_df['Sex'].astype('category')
+
+# Convert 'Embarked' column to categorical data type
+titanic_df['Embarked'] = titanic_df['Embarked'].astype('category')
+titanic_df.describe()
+train_df = pd.read_csv('train.csv')
+test_df = pd.read_csv('test.csv')
+# Display the first few rows of the data
+print(train_df.head())
+
+# Get the summary of the dataset
+print(train_df.info())
+
+# Get summary statistics for numerical columns
+print(train_df.describe())
+
+# Get the count of non-null values for each column
+print(train_df.notnull().sum())
+# Check for missing values
+print(train_df.isnull().sum())
+
+# Handle missing values in 'Age' by imputing with the median
+train_df['Age'].fillna(train_df['Age'].median(), inplace=True)
+
+# Handle missing values in 'Embarked' by imputing with the mode
+train_df['Embarked'].fillna(train_df['Embarked'].mode()[0], inplace=True)
+
+# Check for duplicates
+print(train_df.duplicated().sum())
+
+# Drop duplicates if any
+train_df.drop_duplicates(inplace=True)
+
+# Reset index after dropping duplicates
+train_df.reset_index(drop=True, inplace=True)
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Distribution of 'Survived'
+sns.countplot(x='Survived', data=train_df)
+plt.show()
+
+# Distribution of 'Pclass'
+sns.countplot(x='Pclass', data=train_df)
+plt.show()
+
+# Distribution of 'Sex'
+sns.countplot(x='Sex', data=train_df)
+plt.show()
+
+# Distribution of 'Embarked'
+sns.countplot(x='Embarked', data=train_df)
+plt.show()
